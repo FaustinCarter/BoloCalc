@@ -30,8 +30,10 @@ class Sensitivity:
         return NEP_ph, NEP_pharr
     #Thermal carrier NEP given some optical power on the bolometer
     def NEPbolo(self, optPow, det):
-        if 'NA' in str(det.psat): return self.nse.bolometerNEP(det.psatFact*optPow, det.n, det.Tc, det.Tb)
-        else:                     return self.nse.bolometerNEP(det.psat,            det.n, det.Tc, det.Tb)    
+        if 'NA' in str(det.psat):  psat = det.psatFact*optPow
+        else:                      psat = det.psat
+        if 'NA' in str(det.Flink): return self.nse.bolometerNEP(psat, det.Tc, det.Tb, det.n)
+        else:                      return self.nse.bolometerNEP(psat, det.Tc, det.Tb, det.n, det.Flink)
     #Readout NEP given some optical power on the bolometer
     def NEPrd(self, optPow, det):
         if   'NA' in str(det.nei):   return 'NA'

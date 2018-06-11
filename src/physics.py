@@ -156,6 +156,12 @@ class Physics:
     def aniPower(self, freq, temp, emissivity=1.0):
         freq, temp, emissivity = self.__checkInputs(freq, [temp, emissivity])
         return np.trapz(self.aniPowSpec(freq, temp, emissivity), freq)
+    #Link parameter for bolometer thermal conductance
+    def Flink(self, Tc, Tb, n):
+        return ((n+1)/(2*n+3))*(1-((Tb/Tc)**(2*n+3)))/(1-((Tb/Tc)**(n+1)))
+    #Thermal conductance for a bolometer
+    def G(self, Psat, Tc, Tb, n):
+        return Psat*(n+1)*(Tc**n)/((Tc**(n+1))-(Tb**(n+1)))
 
     #***** Private Methods *****
     #Check that inputs are valid

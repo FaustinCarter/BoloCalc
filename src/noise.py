@@ -70,8 +70,11 @@ class Noise:
         deltaF = freqs[-1] - freqs[0]
         return np.sqrt(2*(self.ph.h*freqs*pow + ((pow**2)/deltaF)))
     #Bolometer noise equivalent power [W/rt(Hz)]
-    def bolometerNEP(self, psat, n, Tc, Tb):
-        return np.sqrt(4*self.ph.kB*psat*Tb*(((np.power((n+1),2.)/((2*n)+3))*((np.power((Tc/Tb),((2*n)+3)) - 1)/np.power((np.power((Tc/Tb),(n+1)) - 1),2.)))))
+    def bolometerNEP(self, Psat, Tc, Tb, n, Flink=None):
+        if Flink is None:
+            return np.sqrt(4*self.ph.kB*self.ph.Flink(Tc, Tb, n)*(Tc**2)*self.ph.G(Psat, Tc, Tb, n))
+        else:
+            return np.sqrt(4*self.ph.kB*Flink*(Tc**2)*self.ph.G(Psat, Tc, Tb, n))
     #Readout noise equivalent power [W/rt(Hz)]
     def readoutNEP(self, pelec, boloR, nei):
         return np.sqrt(boloR*pelec)*nei
@@ -90,8 +93,8 @@ class Noise:
         dpdt = self.dPdT(skyEff, freqs)
         return nep/(np.sqrt(2.)*dpdt)
     #Bolometer noise equivalent temperature [K-rt(s)]
-    def bolometerNET(self, psat, freq, fbw, n, Tc, Tb, skyEff):
-        nep  = bolometerNEP(psat, n, Tc, Tb) 
+    def bolometerNET(self, Psat, freq, fbw, n, Tc, Tb, skyEff):
+        nep  = bolometerNEP(Psat, n, Tc, Tb) 
         dpdt = self.dPdT(skyEff, freq, fbw)
         return nep/(np.sqrt(2.)*dpdt)
     #Readout noise equivalent temperature [K-rt(s)]

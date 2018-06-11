@@ -27,8 +27,6 @@ class Calculate:
     def combineSensitivity(self, sensArr):
         self.snsmeans = [[[[sensArr[i][j][k][0][m] for m in range(len(sensArr[i][j][k][0]))] for k in range(len(sensArr[i][j]))] for j in range(len(sensArr[i]))] for i in range(len(sensArr))]
         self.snsstds  = [[[[sensArr[i][j][k][1][m] for m in range(len(sensArr[i][j][k][1]))] for k in range(len(sensArr[i][j]))] for j in range(len(sensArr[i]))] for i in range(len(sensArr))]
-        #self.snsmeans = {key: [[[sensArr[i][j][k][0][key] for key in range(len(sensArr[i][j][k][0].keys()))] for k in range(len(sensArr[i][j]))] for j in range(len(sensArr[i]))] for i in range(len(sensArr))}
-        #self.snsstds  = {key: [[[sensArr[i][j][k][1][key] for key in range(len(sensArr[i][j][k][1].keys()))] for k in range(len(sensArr[i][j]))] for j in range(len(sensArr[i]))] for i in range(len(sensArr))}
     #Combine the optical powers of multiple channels
     def combineOpticalPower(self, optArr):
         self.optmeans = [[[[optArr[i][j][k][0][m]  for m in range(len(optArr[i][j][k][0]))]  for k in range(len(optArr[i][j]))]  for j in range(len(optArr[i]))]  for i in range(len(optArr))]
