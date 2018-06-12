@@ -30,3 +30,6 @@
 *Experiments/*
 !*Experiments/ExampleExperiment/
 !*Experiments/ExampleExperiment/*
+
+#Ignore OSX directory files
+*.DS_Store
