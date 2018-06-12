@@ -6,13 +6,9 @@
 #Atmosphere profile text files
 *src/atmFiles/*/TXT/
 
-#Latex temporary files
-*README/*.tex
-*README/*.aux
-*README/*.synctex.gz
-*README/*.log
-*README/*.toc
-*README/*.png
+#Latex temporary files and figures
+*MANUAL/*
+!*MANUAL/BoloCalc_UserManual.pdf
 
 #All output files
 *sensitivity.txt
