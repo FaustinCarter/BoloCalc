@@ -22,7 +22,16 @@
 *overplotATM.py
 *plotATM.py
 
-#Ignore non-example directories
+#Ignore non-example directories and Simons Array directories
 *Experiments/*
 !*Experiments/ExampleExperiment/
 !*Experiments/ExampleExperiment/*
+!*Experiments/SimonsArray/
+!*Experiments/SimonsArray/*
+
+#OSX design directories
+*.DS_Store
+
+#Take offline files offline
+*OFFLINE/
+*OFFLINE/*
