@@ -8,6 +8,7 @@
 
 #Latex temporary files
 *MANUAL/*
+!*MANUAL/
 !*MANUAL/BoloCalc_UserManual.pdf
 
 #All output files
@@ -22,8 +23,13 @@
 *overplotATM.py
 *plotATM.py
 
+<<<<<<< HEAD
 #Ignore non-example directories and Simons Array directories
 *Experiments/*
+=======
+#Ignore non-example directories
+#*Experiments/*
+>>>>>>> 86fac7c... Updated user manual
 !*Experiments/ExampleExperiment/
 !*Experiments/ExampleExperiment/*
 !*Experiments/SimonsArray/
