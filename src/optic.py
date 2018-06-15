@@ -67,15 +67,15 @@ class Optic:
         else:                                            scattTemp = temp
 
         #Absorption
-        if 'Aperture' in self.params['Element']:
+        if 'aperture' in self.params['Element'].lower() or 'stop' in self.params['Element'].lower() or 'lyot' in self.params['Element'].lower():
             if not eff: 
                 if not self.params['Absorption'].isEmpty(): abso = self.__paramSamp(self.params['Absorption'], ch.bandID); abso = np.ones(ch.nfreq)*abso
                 else:                                       abso = 1. - self.__ph.spillEff(ch.freqs, ch.params['Pixel Size'], ch.Fnumber, ch.params['Waist Factor'])
             else:       
                 abso = 1. - eff
         else:
-            if not self.params['Absorption'].isEmpty():                                     abso = self.__paramSamp(self.params['Absorption'], ch.bandID); abso = np.ones(ch.nfreq)*abso
-            elif 'Mirror' in self.params['Element'] or 'Primary' in self.params['Element']: abso = 1. - self.__ph.ohmicEff(ch.freqs, self.__paramSamp(self.params['Conductivity'], ch.bandID))
+            if not self.params['Absorption'].isEmpty():                                                     abso = self.__paramSamp(self.params['Absorption'], ch.bandID); abso = np.ones(ch.nfreq)*abso
+            elif 'mirror' in self.params['Element'].lower() or 'primary' in self.params['Element'].lower(): abso = 1. - self.__ph.ohmicEff(ch.freqs, self.__paramSamp(self.params['Conductivity'], ch.bandID))
             else:                                                                           
                 try:                                                                        abso = self.__ph.dielectricLoss(ch.freqs, self.__paramSamp(self.params['Thickness'], ch.bandID), self.__paramSamp(self.params['Index'], ch.bandID), self.__paramSamp(self.params['Loss Tangent'], ch.bandID))
                 except:                                                                     abso = np.zeros(ch.nfreq)
@@ -88,7 +88,7 @@ class Optic:
                 if r < 0: r = 0.
         
         #Element, absorption, efficiency, and temperature
-        elem  = self.params['Element']
+        elem  = self.params['Element'].lower()
         #if not scatt is None and not spill is None: emiss = abso + scatt*refl*self.__powFrac(scattTemp, temp, ch.freqs) + spill*self.__powFrac(spillTemp, temp, ch.freqs)
         #elif not spill is None:                     emiss = abso + spill*self.__powFrac(     spillTemp, temp, ch.freqs) 
         #elif not scatt is None:                     emiss = abso + scatt*refl*self.__powFrac(scattTemp, temp, ch.freqs)
@@ -101,7 +101,7 @@ class Optic:
         else:               effic = 1. - refl - abso - spill - scatt
 
         #Store channel pixel parameters
-        if elem == 'Aperture':
+        if 'aperture' in elem or 'stop' in elem or 'lyot' in elem:
             ch.apEff     = np.trapz(effic, ch.freqs)/(ch.freqs[-1] - ch.freqs[0])
             ch.edgeTaper = self.__ph.edgeTaper(ch.apEff)
 
